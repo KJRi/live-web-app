@@ -3,15 +3,59 @@ import React from 'react'
 import styles from './Logo.css'
 
 type Props = {
-  title: string,
-  img: string
+  location: Location
 }
+type State = {
+  current: string
+}
+class Logo extends React.Component<Props, State> {
+  props: Props
+  activeMenuItem: Function
 
-const Logo = ({ title = 'starter-kit', img = '/logo.png' }: Props) => (
-  <div className={styles['logo']}>
-    <img src={img} />
-    {title}
-  </div>
-)
+  constructor (props: Props) {
+    super(props)
+
+    this.state = { current: '-1' }
+
+    this.activeMenuItem = this.activeMenuItem.bind(this)
+  }
+  componentWillMount () {
+    this.activeMenuItem(location)
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    this.activeMenuItem(location)
+  }
+
+  activeMenuItem (location: Location) {
+    const { pathname } = location
+    let key
+    switch (pathname) {
+      case '/':
+        key = '首页'
+        break
+      case '/detail':
+        key = '详情页'
+        break
+      case '/circle':
+        key = '朋友圈'
+        break
+      case '/personal':
+        key = '个人中心'
+        break
+      default:
+        key = '首页'
+    }
+    this.setState({ current: key })
+  }
+
+  render () {
+    return (
+      <div className={styles['logo']}>
+        {this.state.current}
+      </div>
+    )
+  }
+}
 
 export default Logo

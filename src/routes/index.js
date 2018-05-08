@@ -1,8 +1,9 @@
 // @flow
 // We only need to import the modules necessary for initial render
 import Home from './Home'
-import GithubRepos from './GithubRepos'
-import Counter from './Counter'
+import Personal from './Personal'
+import Circle from './Circle'
+import Detail from './Detail'
 
 // Force import during development to enable Hot-Module Replacement
 // not need ?
@@ -14,6 +15,7 @@ import Counter from './Counter'
 
 export default {
   home: Home,
-  githubRepos: GithubRepos(),
-  counter: Counter()
+  circle: Circle,
+  personal: Personal,
+  detail: Detail
 }
