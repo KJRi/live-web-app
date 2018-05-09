@@ -4,7 +4,7 @@ import './Personal.css'
 
 export const Personal = () => (
   <div>
-    <h4>Personal!</h4>
+    h4
   </div>
 )
 
