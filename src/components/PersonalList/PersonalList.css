@@ -11,4 +11,10 @@
     float: right;
     color: #999;
   }
+  :global .anticon {
+    margin-right: 10px;
+  }
+}
+.list-item:nth-child(1) {
+  text-align: center;
 }

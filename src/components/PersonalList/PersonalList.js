@@ -12,12 +12,13 @@ class PersonalList extends React.PureComponent<Props, State> {
       <div>
         <div className={styles['list-item']}>
           <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
-          <Icon type='right' />
+          <h3>USERNAME</h3>
+          <p>description</p>
         </div>
-        <div className={styles['list-item']}>修改信息<Icon type='right' /></div>
-        <div className={styles['list-item']}>我的关注<Icon type='right' /></div>
-        <div className={styles['list-item']}>浏览记录<Icon type='right' /></div>
-        <div className={styles['list-item']}>退出登录<Icon type='right' /></div>
+        <div className={styles['list-item']}><Icon type='solution' />修改信息<Icon type='right' /></div>
+        <div className={styles['list-item']}><Icon type='smile-o' />我的关注<Icon type='right' /></div>
+        <div className={styles['list-item']}><Icon type='like' />我的点赞<Icon type='right' /></div>
+        <div className={styles['list-item']}><Icon type='logout' />退出登录<Icon type='right' /></div>
       </div>
     )
   }
