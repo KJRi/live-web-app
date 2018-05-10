@@ -9,10 +9,11 @@
   .anticon-right {
     font-size: 14px;
     float: right;
-    color: #999;
+    color: #FFDA44;
   }
   :global .anticon {
     margin-right: 10px;
+    color: #FFDA44;
   }
 }
 .list-item:nth-child(1) {
