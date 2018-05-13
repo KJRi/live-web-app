@@ -1,0 +1,13 @@
+@import "../../styles/abstracts/variables.css";
+
+.core-layout {
+  height: 100%;
+  position: relative;
+}
+
+.viewport {
+  padding: 100px;
+  background-color: lightyellow;
+  height: 100%;
+  overflow: auto;
+}
