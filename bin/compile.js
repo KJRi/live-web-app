@@ -3,7 +3,8 @@ const webpack = require('webpack')
 const debug = require('debug')('app:bin:compile')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
-
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/live')
 // Wrapper around webpack to promisify its compiler and supply friendly logging
 const webpackCompiler = (webpackConfig) =>
   new Promise((resolve, reject) => {
