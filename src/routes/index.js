@@ -6,12 +6,14 @@ import Circle from './Circle'
 import Detail from './Detail'
 import Login from './Login'
 import Register from './Register'
+import EditPost from './EditPost'
 
 // Force import during development to enable Hot-Module Replacement
 // not need ?
 
 export default {
   register: Register,
+  editPost: EditPost,
   login: Login,
   home: Home,
   circle: Circle,

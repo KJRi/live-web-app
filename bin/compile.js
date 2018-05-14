@@ -4,7 +4,10 @@ const debug = require('debug')('app:bin:compile')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/live')
+mongoose.connect(project.database);
+mongoose.connection.on('error', function() {
+  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?')
+})
 // Wrapper around webpack to promisify its compiler and supply friendly logging
 const webpackCompiler = (webpackConfig) =>
   new Promise((resolve, reject) => {

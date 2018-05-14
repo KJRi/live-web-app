@@ -10,6 +10,7 @@ debug('Creating default configuration.')
 // ========================================================
 const config = {
   env : process.env.NODE_ENV || 'development',
+  database: process.env.MONGO_URI || 'localhost',
 
   // ----------------------------------
   // Project Structure
