@@ -4,14 +4,14 @@ import { responseClient } from '../method/util'
 const router = Express.Router()
 
 // 登录后端
-router.post('/user/login', (req, res) => {
+router.post('/login', (req, res) => {
   let { password, phoneNum } = req.body
-  if (!password) {
-    responseClient(res, 400, 2, '密码不可为空')
-    return
-  }
   if (!phoneNum) {
     responseClient(res, 400, 2, '手机号不可为空')
+    return
+  }
+  if (!password) {
+    responseClient(res, 400, 2, '密码不可为空')
     return
   }
   User.findOne({
@@ -36,7 +36,7 @@ router.post('/user/login', (req, res) => {
   })
 })
 // 注册后端
-router.post('/user/register', (req, res) => {
+router.post('/register', (req, res) => {
   let { username, password, confirmPassword, phoneNum } = req.body
   if (!username) {
     responseClient(res, 400, 2, '用户名不可为空')
@@ -84,7 +84,7 @@ router.post('/user/register', (req, res) => {
 })
 
 // 用户验证
-router.get('/user/userInfo', function (req, res) {
+router.get('/userInfo', function (req, res) {
   if (req.session.userInfo) {
     responseClient(res, 200, 0, '', req.session.userInfo)
   } else {
@@ -92,7 +92,7 @@ router.get('/user/userInfo', function (req, res) {
   }
 })
 // 退出登录
-router.get('/user/logout', function (req, res) {
+router.get('/logout', function (req, res) {
   req.session.destroy()
   res.redirect('/')
   console.log(1)

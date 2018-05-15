@@ -16,6 +16,11 @@
     color: #FFDA44;
   }
 }
-.list-item:nth-child(1) {
-  text-align: center;
+a{
+  color: #666;
+}
+a:nth-child(1) {
+  .list-item {
+    text-align: center;
+  }
 }

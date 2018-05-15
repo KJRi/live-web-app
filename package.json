@@ -99,6 +99,7 @@
     "normalize.css": "^7.0.0",
     "postcss-loader": "^2.0.5",
     "react": "^15.5.4",
+    "react-addons-pure-render-mixin": "^15.6.0",
     "react-css-modules": "^4.3.0",
     "react-dom": "^15.5.4",
     "react-hot-loader": "3.0.0-beta.6",

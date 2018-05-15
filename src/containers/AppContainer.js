@@ -25,7 +25,7 @@ export class AppContainer extends Component {
       <Provider store={store}>
         <BrowserRouter forceRefresh={!supportsHistory} keyLength={12}>
           <div style={{ height: '100%' }}>
-            <CoreLayout />
+            <LoginLayout />
           </div>
         </BrowserRouter>
       </Provider>

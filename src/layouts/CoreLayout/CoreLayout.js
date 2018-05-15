@@ -19,6 +19,7 @@ export const CoreLayout = () => (
         <Route path='/circle' component={routes.circle} exact />
         <Route path='/personal' component={routes.personal} exact />
         <Route path='/detail' component={routes.detail} exact />
+        <Route path='/editPost' component={routes.editPost} exact />
       </Switch>
     </div>
     <Footer key='footer' />
