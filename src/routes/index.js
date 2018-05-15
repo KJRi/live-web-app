@@ -1,6 +1,5 @@
 // @flow
 // We only need to import the modules necessary for initial render
-import React, {Component, PropTypes} from 'react'
 import Home from './Home'
 import Personal from './Personal'
 import Circle from './Circle'

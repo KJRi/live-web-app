@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { Input, Form, Icon, Button } from 'antd'
 import styles from './Login.css'
+import fetch from 'isomorphic-fetch'
 const FormItem = Form.Item
 
 class LoginFormCom extends Component {
@@ -14,7 +15,23 @@ class LoginFormCom extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
-        this.props.login(values.phoneNum, values.password)
+        fetch('/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            phoneNum: values.phoneNum,
+            password: values.password
+          }).then(res => {
+            if (res.ok) {
+              console.log('登录成功')
+              return res.json()
+            }
+          }).then(
+            console.log(1)
+          )
+        })
       }
     })
   };

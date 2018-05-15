@@ -1,7 +1,12 @@
+// @flow
 const express = require('express')
 const debug = require('debug')('app:server')
 const path = require('path')
+const bodyParser = require('body-parser')
 const webpack = require('webpack')
+const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
@@ -10,7 +15,25 @@ const app = express()
 
 // Apply gzip compression
 app.use(compress())
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser('express_react_cookie'))
+app.use(session({
+  secret:'express_react_cookie',
+  resave: true,
+  saveUninitialized:true,
+  cookie: { maxAge: 60 * 1000 * 30 }// 过期时间
+}))
+mongoose.Promise = require('bluebird')
+mongoose.connect(`mongodb://${project.dbHost}:${project.dbPort}/live`, function (err) {
+  if (err) {
+    console.log(err, '数据库连接失败')
+    return
+  }
+  console.log('数据库连接成功')
+})
+// 导入并使用数据库路由
+app.use('/user', require('../src/server/user'))
+// app.use('/post', require('../src/server/post'))
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------

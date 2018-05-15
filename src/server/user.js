@@ -1,6 +1,6 @@
-import Express from 'express'
-import User from '../models/user'
-import { responseClient } from '../method/util'
+const { responseClient } = require('../method/util')
+const User = require('../models/user')
+const Express = require('express')
 const router = Express.Router()
 
 // 登录后端

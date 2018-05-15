@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+const crypto = require('crypto')
 
 module.exports = {
   MD5_SUFFIX: 'eiowafnajkdlfjsdkfj大姐夫文姐到了困难额我积分那看到你@#￥%……&）（*&……）',
