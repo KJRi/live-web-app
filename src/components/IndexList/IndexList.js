@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import styles from './IndexList.css'
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Icon } from 'antd'
 
 type Props = {}
 type State = {
@@ -63,7 +63,7 @@ class IndexList extends React.PureComponent<Props, State> {
                 <Col span={24}>
                   <Card style={{ backgroundColor: `${bgColor}` }}
                     title={<h2 className={styles['card-title']}
-                      style={{ backgroundColor: `${bgColor}` }}>{list.title}</h2>}
+                      style={{ backgroundColor: `${bgColor}` }}><Icon type='tag' />{list.title}</h2>}
                     className={styles['card']}
                     key={index}
                     onClick={() => this.enterList(list.title)}
