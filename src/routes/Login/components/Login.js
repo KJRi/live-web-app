@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { Input, Form, Icon, Button } from 'antd'
+import { Input, Form, Icon, Button, message } from 'antd'
 import styles from './Login.css'
 import fetch from 'isomorphic-fetch'
 const FormItem = Form.Item
@@ -14,27 +14,21 @@ class LoginFormCom extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
-        fetch('/user/login', {
+        fetch('/live/user/login', {
           method: 'POST',
-          headers: {
+          headers:{
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             phoneNum: values.phoneNum,
             password: values.password
-          }).then(res => {
-            if (res.ok) {
-              console.log('登录成功')
-              return res.json()
-            }
-          }).then(
-            console.log(1)
-          )
-        })
+          })
+        }).then(res => res.json())
+          .then(data => console.log(data))
+          .catch(e => console.log('Oops, error', e))
       }
     })
-  };
+  }
 
   render () {
     const { getFieldDecorator } = this.props.form
