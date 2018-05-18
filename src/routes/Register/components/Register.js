@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { Input, Form, Icon, Button } from 'antd'
+import { Input, Form, Icon, Button, message } from 'antd'
 import styles from './Register.css'
 const FormItem = Form.Item
 
@@ -8,25 +8,36 @@ class RegisterFormCom extends Component {
   constructor (props) {
     super(props)
   }
-
+// 注册
   handleRegister = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        fetch('/live/user/register', {
+        // 注册请求
+        fetch('/api/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: {
-            phoneNum: values.phoneNum,
+          body: JSON.stringify({
             password: values.password,
             username: values.username
-          }
+          })
         }).then(res => res.json())
         .then(res => {
-          console.log('success')
+          // 后台端口请求正确
+          if (res.success) {
+            message.destroy()
+            message.success(res.message)
+            localStorage.setItem('username', values.username)
+            window.location.href = '/'
+          } else {
+            // 失败时报错
+            message.destroy()
+            message.info(res.message)
+          }
         })
+        .catch(e => console.log('Oops, error', e))
       }
     })
   }
@@ -37,13 +48,6 @@ class RegisterFormCom extends Component {
       <div className={styles.containel}>
         <h2>注册</h2>
         <Form onSubmit={this.handleRegister} className={styles.formStyle}>
-          <FormItem>
-            {getFieldDecorator('phoneNum', {
-              rules: [{ required: true, message: '请输入手机号!' }]
-            })(
-              <Input prefix={<Icon type='phone' style={{ fontSize: 13 }} />} placeholder='phoneNum' />
-                      )}
-          </FormItem>
           <FormItem>
             {getFieldDecorator('username', {
               rules: [{ required: true, message: '请输入用户名!' }]
