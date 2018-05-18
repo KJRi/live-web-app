@@ -151,7 +151,7 @@ Changelog
 * Updated server start debug message to display correct host
 
 ### Deprecations
-<!-- * Removed `redux-actions` -->
+* Removed `redux-actions`
 * Removed `dotenv`
 * Removed `add-module-exports` babel plugin
 

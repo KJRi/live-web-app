@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import BrowserRouter from 'react-router-dom/BrowserRouter'
-import MainLayout from 'layouts/MainLayout'
+import CoreLayout from 'layouts/CoreLayout'
 import { Provider } from 'react-redux'
 
 type Props = {
@@ -24,7 +24,7 @@ export class AppContainer extends Component {
       <Provider store={store}>
         <BrowserRouter forceRefresh={!supportsHistory} keyLength={12}>
           <div style={{ height: '100%' }}>
-            <MainLayout />
+            <CoreLayout />
           </div>
         </BrowserRouter>
       </Provider>

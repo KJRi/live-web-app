@@ -13,7 +13,20 @@ class RegisterFormCom extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.register(values)
+        fetch('/live/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: {
+            phoneNum: values.phoneNum,
+            password: values.password,
+            username: values.username
+          }
+        }).then(res => res.json())
+        .then(res => {
+          console.log('success')
+        })
       }
     })
   }
@@ -22,8 +35,7 @@ class RegisterFormCom extends Component {
     const { getFieldDecorator } = this.props.form
     return (
       <div className={styles.containel}>
-        <h2>掌上生活网</h2>
-        <h3>注册</h3>
+        <h2>注册</h2>
         <Form onSubmit={this.handleRegister} className={styles.formStyle}>
           <FormItem>
             {getFieldDecorator('phoneNum', {

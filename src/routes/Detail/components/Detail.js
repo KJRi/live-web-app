@@ -35,7 +35,6 @@ class Detail extends React.PureComponent<Props, State> {
         <Search
           placeholder='请输入您想搜索的帖子'
           onSearch={value => console.log(value)}
-          enterButton='Search'
           size='large'
         />
         {

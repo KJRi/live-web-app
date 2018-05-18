@@ -1,41 +1,31 @@
-// @flow
 const express = require('express')
 const debug = require('debug')('app:server')
 const path = require('path')
-const bodyParser = require('body-parser')
 const webpack = require('webpack')
+const morgan = require('morgan') // 命令行log显示
 const mongoose = require('mongoose')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
+const bodyParser = require('body-parser')
+const passport = require('passport')// 用户认证模块passport
+const Strategy = require('passport-http-bearer').Strategy// token验证模块
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
+const routes = require('../routes')
 
 const app = express()
 
 // Apply gzip compression
 app.use(compress())
+app.use(passport.initialize())// 初始化passport模块
+app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser('express_react_cookie'))
-app.use(session({
-  secret:'express_react_cookie',
-  resave: true,
-  saveUninitialized:true,
-  cookie: { maxAge: 60 * 1000 * 30 }// 过期时间
-}))
-mongoose.Promise = require('bluebird')
-mongoose.connect(`mongodb://${project.dbHost}:${project.dbPort}/live`, function (err) {
-  if (err) {
-    console.log(err, '数据库连接失败')
-    return
-  }
-  console.log('数据库连接成功')
-})
-// 导入并使用数据库路由
-app.use('/user', require('../src/server/user'))
-// app.use('/post', require('../src/server/post'))
+app.use(bodyParser.json())
 // ------------------------------------
 // Apply Webpack HMR Middleware
+routes(app)
+// 链接数据库
+mongoose.Promise = global.Promise
+mongoose.connect(project.database)
 // ------------------------------------
 if (project.env === 'development') {
   const compiler = webpack(webpackConfig)
