@@ -19,6 +19,10 @@ const PostSchema = new Schema({
     type: Number,
     default: 0
   },
+  comNum: {
+    type: Number,
+    default: 0
+  },
   postTime: {
     type: Date,
     default: Date.now()
