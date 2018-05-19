@@ -26,10 +26,31 @@ const arr = [
 ]
 
 type Props = {}
-type State = {}
+type State = {
+  postlist: Array<Object>
+}
 
 class Detail extends React.PureComponent<Props, State> {
+  constructor (props) {
+    super(props)
+    this.state = {
+      postlist: []
+    }
+  }
+  componentWillMount () {
+    fetch('/post/all', {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({
+        postlist: res
+      })
+    })
+  }
   render () {
+    const postlist = this.state.postlist
+    console.log(postlist)
     return (
       <div>
         <Search

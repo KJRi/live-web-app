@@ -3,7 +3,7 @@ const express = require('express')
 const Post = require('../models/post')
 const router = express.Router()
 
-// 存储、更改资料
+// 发帖
 router.post('/create', (req, res) => {
   if (!req.body.username) {
     res.json({ success: false, message: '未登录' })
@@ -12,10 +12,8 @@ router.post('/create', (req, res) => {
       author: req.body.username,
       title: req.body.title,
       content: req.body.content,
-      postTime: req.body.postTime,
       tag: req.body.tag
     })
-    // 存储用户信息
     newPost.save((err) => {
       if (err) {
         return res.json({ success: false, message: '发帖失败!' })
@@ -23,6 +21,13 @@ router.post('/create', (req, res) => {
       res.json({ success: true, message: '发帖成功!' })
     })
   }
+})
+// 获取all帖子
+router.get('/all', (req, res) => {
+  Post.find({}).sort({ _id: -1 }).exec().then((posts) => {
+    return res.json(posts)
+  }
+)
 })
 
 module.exports = router

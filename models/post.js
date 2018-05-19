@@ -21,7 +21,7 @@ const PostSchema = new Schema({
   },
   postTime: {
     type: Date,
-    require: true
+    default: Date.now()
   },
   tag: {
     type: Number,

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import styles from './EditPost.css'
 import { Input, Form, Icon, Button, message, Select } from 'antd'
 const FormItem = Form.Item
-
+const { Option } = Select
 const options = [
   {
     value: '0',
@@ -39,6 +39,29 @@ class EditPost extends React.PureComponent<Props, State> {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
+        fetch('post/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: localStorage.getItem('username'),
+            title: values.title,
+            tag: values.tag,
+            content: values.content
+          })
+        }).then(res => res.json())
+          .then(res => {
+            // 后端正确
+            if (res.success) {
+              message.destroy()
+              message.success(res.message)
+            } else {
+              message.destroy()
+              message.info(res.message)
+            }
+          })
+          .catch(e => console.log('Oops, error', e))
       }
     })
   }
@@ -47,6 +70,19 @@ class EditPost extends React.PureComponent<Props, State> {
     return (
       <div className={styles['containel']}>
         <Form onSubmit={this.handleSubmit} className={styles.formStyle}>
+          <FormItem>
+            {getFieldDecorator('tag', {
+              rules: [{ required: true, message: '请选择分区!' }]
+            })(
+              <Select style={{ width: 200 }} placeholder='选择分区'>
+                {
+                  options && options.map((list, index) => {
+                    return <Option value={list.value}>{list.label}</Option>
+                  })
+                }
+              </Select>
+                      )}
+          </FormItem>
           <FormItem>
             {getFieldDecorator('title', {
               rules: [{ required: true, message: '请输入标题!' },
