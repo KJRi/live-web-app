@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import styles from './EditPost.css'
 import { Input, Form, Icon, Button, message, Select } from 'antd'
 const FormItem = Form.Item
-const { TextArea } = Input
 
 const options = [
   {
@@ -54,6 +53,14 @@ class EditPost extends React.PureComponent<Props, State> {
             { type: 'string', max:50, message: '标题不能超过50个字符!' }]
             })(
               <Input prefix={<Icon type='edit' style={{ fontSize: 13 }} />} placeholder='你的标题' />
+                      )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('content', {
+              rules: [{ required: true, message: '请输入正文!' }]
+            })(
+              <Input prefix={<Icon type='edit' style={{ fontSize: 13 }} />}
+                type='textarea' style={{ height: 300 }} placeholder='你的正文' />
                       )}
           </FormItem>
           <FormItem>

@@ -20,7 +20,7 @@ const PostSchema = new Schema({
     default: 0
   },
   postTime: {
-    type: String,
+    type: Date,
     require: true
   },
   tag: {
