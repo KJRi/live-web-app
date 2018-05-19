@@ -1,29 +1,10 @@
 // @flow
 import React from 'react'
 import './Circle.css'
-import PostPage from 'components/PostPage'
 import UserProfile from 'components/UserProfile'
+import PostPage from 'components/PostPage'
 import { message } from 'antd'
-const arr = [
-  {
-    title: '1',
-    description: 'fsadfgadfg',
-    adNum: '100',
-    comNum: '20'
-  },
-  {
-    title: '3',
-    description: 'fsadfgadfg',
-    adNum: '300',
-    comNum: '20'
-  },
-  {
-    title: '5',
-    description: 'fsadfgadfg',
-    adNum: '500',
-    comNum: '20'
-  }
-]
+
 const userInfo = {
   userName: 'kjr',
   location: {
@@ -35,32 +16,40 @@ const userInfo = {
 }
 
 type Props = {}
-type State = {}
+type State = {
+  postlist: Array<Object>
+}
 
 class Circle extends React.PureComponent<Props, State> {
+  constructor (props: Props) {
+    super(props)
+    this.state = {
+      postlist: []
+    }
+  }
   componentWillMount () {
     const usernname = localStorage.getItem('username')
     if (!usernname) {
       message.info('请先登录')
       window.location.href = '/login'
     }
+    fetch(`/post/get?author=${usernname}`, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({
+        postlist: res
+      })
+    })
   }
+
   render () {
-    // TestEntity.save(function (error, doc) {
-    //   if (error) {
-    //     console.log('error :' + error)
-    //   } else {
-    //     console.log(doc)
-    //   }
-    // })
+    const { postlist } = this.state
     return (
       <div>
         <UserProfile {...{ userInfo }} />
-        {
-          arr && arr.map((list, index) => {
-            return <PostPage {...{ list }} />
-          })
-        }
+        <PostPage {...{ postlist }} />
       </div>
     )
   }

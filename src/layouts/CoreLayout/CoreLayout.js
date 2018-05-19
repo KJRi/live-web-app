@@ -18,6 +18,7 @@ export const CoreLayout = () => (
         <Route path='/' component={routes.home} exact />
         <Route path='/editUserInfo' component={routes.editUserInfo} exact />
         <Route path='/circle' component={routes.circle} exact />
+        <Route path='/tagPost/:tag' component={routes.tagPost} exact />
         <Route path='/personal' component={routes.personal} exact />
         <Route path='/detail' component={routes.detail} exact />
         <Route path='/editPost' component={routes.editPost} exact />

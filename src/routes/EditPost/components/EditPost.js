@@ -4,6 +4,7 @@ import styles from './EditPost.css'
 import { Input, Form, Icon, Button, message, Select } from 'antd'
 const FormItem = Form.Item
 const { Option } = Select
+const { TextArea } = Input
 const options = [
   {
     value: '0',
@@ -95,8 +96,8 @@ class EditPost extends React.PureComponent<Props, State> {
             {getFieldDecorator('content', {
               rules: [{ required: true, message: '请输入正文!' }]
             })(
-              <Input prefix={<Icon type='edit' style={{ fontSize: 13 }} />}
-                type='textarea' style={{ height: 300 }} placeholder='你的正文' />
+              <TextArea prefix={<Icon type='edit' style={{ fontSize: 13 }} />}
+                style={{ height: 300 }} placeholder='你的正文' />
                       )}
           </FormItem>
           <FormItem>

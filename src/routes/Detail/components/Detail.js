@@ -11,11 +11,25 @@ type State = {
 }
 
 class Detail extends React.PureComponent<Props, State> {
+  searchPst: Function
   constructor (props: Props) {
     super(props)
     this.state = {
       postlist: []
     }
+    this.searchPst = this.searchPst.bind(this)
+  }
+  searchPst (value) {
+    const evalue = value.trim()
+    fetch(`/post/get?title=${evalue}`, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({
+        postlist: res
+      })
+    })
   }
   componentWillMount () {
     fetch('/post/all', {
@@ -34,7 +48,7 @@ class Detail extends React.PureComponent<Props, State> {
       <div>
         <Search
           placeholder='请输入您想搜索的帖子'
-          onSearch={value => console.log(value)}
+          onSearch={this.searchPst}
           size='large'
         />
         <PostPage {...{ postlist }} />

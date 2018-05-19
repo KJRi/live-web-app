@@ -29,5 +29,26 @@ router.get('/all', (req, res) => {
   }
 )
 })
-
+// 根据值获取帖子
+router.get('/get', (req, res) => {
+  if (req.query.tag) {
+    Post.find({ 'tag': req.query.tag }).sort({ _id: -1 }).exec().then((posts) => {
+      return res.json(posts)
+    })
+  } else if (req.query.postId) {
+    Post.findById(req.query.postId).exec().then((posts) => {
+      return res.json(posts)
+    })
+  } else if (req.query.author) {
+    Post.find({ 'author': req.query.author }).sort({ _id: -1 }).exec().then((posts) => {
+      return res.json(posts)
+    })
+  } else if (req.query.title) {
+    Post.find({ 'title': { $regex:/req.query.title/ } }).sort({ _id: -1 }).exec().then((posts) => {
+      return res.json(posts)
+    })
+  } else {
+    res.json({ success: false, message: '未获取到帖子!' })
+  }
+})
 module.exports = router
