@@ -7,11 +7,13 @@ import Detail from './Detail'
 import Login from './Login'
 import Register from './Register'
 import EditPost from './EditPost'
+import EditUserInfo from './EditUserInfo'
 
 // Force import during development to enable Hot-Module Replacement
 // not need ?
 
 export default {
+  editUserInfo: EditUserInfo,
   register: Register,
   editPost: EditPost,
   login: Login,

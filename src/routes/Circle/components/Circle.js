@@ -3,6 +3,7 @@ import React from 'react'
 import './Circle.css'
 import PostPage from 'components/PostPage'
 import UserProfile from 'components/UserProfile'
+import { message } from 'antd'
 const arr = [
   {
     title: '1',
@@ -37,6 +38,13 @@ type Props = {}
 type State = {}
 
 class Circle extends React.PureComponent<Props, State> {
+  componentWillMount () {
+    const usernname = localStorage.getItem('username')
+    if (!usernname) {
+      message.info('请先登录')
+      window.location.href = '/login'
+    }
+  }
   render () {
     // TestEntity.save(function (error, doc) {
     //   if (error) {
