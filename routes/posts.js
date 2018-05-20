@@ -51,7 +51,7 @@ router.get('/get', (req, res) => {
   } else {
     Post.find({}).sort({ _id: -1 }).exec().then((posts) => {
       return res.json(posts)
-    }
+    })
   }
 })
 module.exports = router

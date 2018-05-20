@@ -23,6 +23,9 @@ class PostPage extends React.PureComponent<Props, State> {
       </span>
 )
     const postlist = this.props.postlist
+    postlist && postlist.map(item => {
+      item.href = `http://localhost:3000/id/${item._id}`
+    })
     console.log(postlist)
     return (
       <List

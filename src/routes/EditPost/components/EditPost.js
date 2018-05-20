@@ -57,6 +57,7 @@ class EditPost extends React.PureComponent<Props, State> {
             if (res.success) {
               message.destroy()
               message.success(res.message)
+              window.location.href = '/detail'
             } else {
               message.destroy()
               message.info(res.message)

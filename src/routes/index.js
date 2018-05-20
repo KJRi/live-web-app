@@ -9,11 +9,13 @@ import Register from './Register'
 import EditPost from './EditPost'
 import EditUserInfo from './EditUserInfo'
 import TagPost from './TagPost'
+import Post from './Post'
 
 // Force import during development to enable Hot-Module Replacement
 // not need ?
 
 export default {
+  post: Post,
   editUserInfo: EditUserInfo,
   tagPost: TagPost,
   register: Register,

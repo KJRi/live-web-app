@@ -61,8 +61,8 @@ class Footer extends React.Component<Props, State> {
       case '/personal':
         key = 'personal'
         break
-      default:
-        key = 'home'
+      // default:
+      //   key = 'home'
     }
     this.setState({ current: key })
   }
@@ -75,6 +75,7 @@ class Footer extends React.Component<Props, State> {
         <Menu
           theme='dark'
           mode='horizontal'
+          selectable='false'
           onclick={this.handleClick}
           selectedKeys={[this.state.current]}
           defaultSelectedKeys={['1']}
