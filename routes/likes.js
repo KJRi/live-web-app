@@ -51,5 +51,11 @@ router.get('/getByPost', (req, res) => {
     return res.json(like)
   })
 })
+// 查看是否点赞过
+router.get('/getBy', (req, res) => {
+  Like.find({ 'post': req.query.postId, 'author': req.query.username }).sort({ _id: -1 }).exec().then((like) => {
+    return res.json(like)
+  })
+})
 
 module.exports = router

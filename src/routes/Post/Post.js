@@ -15,7 +15,8 @@ type State = {
   confirmLoading: Boolean,
   comment: String,
   commentList: Array<Object>,
-  userinfo: Object
+  userinfo: Object,
+  likeState: Boolean
 }
 
 class Post extends React.PureComponent<Props, State> {
@@ -27,11 +28,13 @@ class Post extends React.PureComponent<Props, State> {
       confirmLoading: false,
       comment: '',
       commentList: [],
-      userinfo: {}
+      userinfo: {},
+      likeState: false
     }
   }
   componentWillMount () {
     const id = this.props.match.params.id
+    const username = localStorage.getItem('username')
     fetch(`/post/get?postId=${id}`, {
       method: 'GET'
     })
@@ -40,6 +43,17 @@ class Post extends React.PureComponent<Props, State> {
       this.setState({
         postlist: res
       })
+    })
+    fetch(`/like/getBy?postId=${id}&&username=${username}`, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (!res.length === 0) {
+        this.setState({
+          likeState: true
+        })
+      }
     })
     fetch(`/comment/get?postId=${id}`, {
       method: 'GET'
@@ -90,15 +104,26 @@ class Post extends React.PureComponent<Props, State> {
       visible: false
     })
   }
+  likeIt = () => {
+    const id = this.props.match.params.id
+    const username = localStorage.getItem('username')
+    const { likeState } = this.state
+    if (likeState) {
+
+    }
+  }
   render () {
-    const { postlist, visible, confirmLoading, commentList, userinfo } = this.state
-    console.log(userinfo)
+    const { postlist, visible, confirmLoading, likeState, commentList, userinfo } = this.state
     return (
       <div>
         <Card
           cover={<img alt='example' src='https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png' />}
-          actions={[<Icon type='like-o' text={postlist.adNum} />,
-            <Icon type='edit' text={postlist.comNum} />]} onClick={() => this.setState({ visible: true })}
+          actions={[<Icon type={
+            likeState
+            ? 'like'
+            : 'like-o'
+          } text={postlist.adNum} style={{ color: 'red' }} onClick={this.likeIt} />,
+            <Icon type='edit' text={postlist.comNum} onClick={() => this.setState({ visible: true })} />]}
   >
           <Meta
             avatar={
