@@ -48,7 +48,7 @@ class EditPost extends React.PureComponent<Props, State> {
           body: JSON.stringify({
             username: localStorage.getItem('username'),
             title: values.title,
-            tag: values.tag,
+            tag: values.tag.label,
             content: values.content
           })
         }).then(res => res.json())
@@ -75,7 +75,7 @@ class EditPost extends React.PureComponent<Props, State> {
             {getFieldDecorator('tag', {
               rules: [{ required: true, message: '请选择分区!' }]
             })(
-              <Select style={{ width: 200 }} placeholder='选择分区'>
+              <Select style={{ width: 200 }} labelInValue placeholder='选择分区' >
                 {
                   options && options.map((list, index) => {
                     return <Option value={list.value}>{list.label}</Option>

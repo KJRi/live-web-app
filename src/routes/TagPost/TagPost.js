@@ -2,6 +2,7 @@
 import React from 'react'
 import styles from './TagPost.css'
 import PostPage from 'components/PostPage'
+import { withRouter } from 'react-router'
 
 type Props = {
   match: Object
@@ -17,7 +18,7 @@ class TagPost extends React.PureComponent<Props, State> {
     }
   }
   componentWillMount () {
-    const currenttag = this.props.match.parmas.tag
+    const currenttag = this.props.match.params.tag
     fetch(`/post/get?tag=${currenttag}`, {
       method: 'GET'
     })
@@ -42,4 +43,4 @@ class TagPost extends React.PureComponent<Props, State> {
 //   )
 // }
 
-export default TagPost
+export default withRouter(TagPost)

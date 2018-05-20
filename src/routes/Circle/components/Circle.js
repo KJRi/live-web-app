@@ -4,6 +4,7 @@ import './Circle.css'
 import UserProfile from 'components/UserProfile'
 import PostPage from 'components/PostPage'
 import { message } from 'antd'
+import { withRouter } from 'react-router'
 
 const userInfo = {
   userName: 'kjr',
@@ -15,7 +16,9 @@ const userInfo = {
   phoneNum: '13303574348'
 }
 
-type Props = {}
+type Props = {
+  match: Object
+}
 type State = {
   postlist: Array<Object>
 }
@@ -28,7 +31,7 @@ class Circle extends React.PureComponent<Props, State> {
     }
   }
   componentWillMount () {
-    const usernname = localStorage.getItem('username')
+    const usernname = this.props.match.params.username
     if (!usernname) {
       message.info('请先登录')
       window.location.href = '/login'
@@ -55,4 +58,4 @@ class Circle extends React.PureComponent<Props, State> {
   }
 }
 
-export default Circle
+export default withRouter(Circle)

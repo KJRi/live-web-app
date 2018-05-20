@@ -28,7 +28,7 @@ const PostSchema = new Schema({
     default: Date.now()
   },
   tag: {
-    type: Number,
+    type: String,
     require: true
   }
 })

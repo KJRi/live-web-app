@@ -3,8 +3,11 @@ import React from 'react'
 import styles from './PersonalList.css'
 import { Avatar, Icon } from 'antd'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
-type Props = {}
+type Props = {
+  history: Object
+}
 type State = {}
 
 class PersonalList extends React.PureComponent<Props, State> {
@@ -14,21 +17,23 @@ class PersonalList extends React.PureComponent<Props, State> {
     this.state = {
     }
   }
+  toMy () {
+    const username = localStorage.getItem('username')
+    window.location.href = (`/circle/${username}`)
+  }
   logout () {
     localStorage.clear()
     window.location.href = '/login'
   }
   render () {
-    const usernname = localStorage.getItem('username')
+    const username = localStorage.getItem('username')
     return (
       <div>
-        <Link to='/circle'>
-          <div className={styles['list-item']}>
-            <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
-            <h3>{usernname}</h3>
-            <p>description</p>
-          </div>
-        </Link>
+        <div className={styles['list-item']} onClick={this.toMy}>
+          <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
+          <h3>{username}</h3>
+          <p>description</p>
+        </div>
         <Link to='/editPost'><div className={styles['list-item']}>
           <Icon type='edit' />发帖<Icon type='right' /></div></Link>
         <Link to='/editUserInfo'><div className={styles['list-item']}>
@@ -41,4 +46,4 @@ class PersonalList extends React.PureComponent<Props, State> {
   }
 }
 
-export default PersonalList
+export default withRouter(PersonalList)

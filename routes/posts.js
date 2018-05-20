@@ -44,7 +44,7 @@ router.get('/get', (req, res) => {
       return res.json(posts)
     })
   } else if (req.query.title) {
-    Post.find({ 'title': { $regex:/req.query.title/ } }).sort({ _id: -1 }).exec().then((posts) => {
+    Post.find({ 'title': /req.query.title/ }).sort({ _id: -1 }).exec().then((posts) => {
       return res.json(posts)
     })
   } else {
