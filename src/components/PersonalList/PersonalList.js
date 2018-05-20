@@ -17,23 +17,22 @@ class PersonalList extends React.PureComponent<Props, State> {
     this.state = {
     }
   }
-  toMy () {
-    const username = localStorage.getItem('username')
-    window.location.href = (`/circle/${username}`)
-  }
   logout () {
     localStorage.clear()
     window.location.href = '/login'
   }
   render () {
     const username = localStorage.getItem('username')
+    const mine = `/circle/${username}`
     return (
       <div>
-        <div className={styles['list-item']} onClick={this.toMy}>
-          <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
-          <h3>{username}</h3>
-          <p>description</p>
-        </div>
+        <Link to={mine}>
+          <div className={styles['list-item']}>
+            <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
+            <h3>{username}</h3>
+            <p>description</p>
+          </div>
+        </Link>
         <Link to='/editPost'><div className={styles['list-item']}>
           <Icon type='edit' />发帖<Icon type='right' /></div></Link>
         <Link to='/editUserInfo'><div className={styles['list-item']}>
