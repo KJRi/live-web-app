@@ -10,12 +10,13 @@ import EditPost from './EditPost'
 import EditUserInfo from './EditUserInfo'
 import TagPost from './TagPost'
 import Post from './Post'
+import MyLike from './MyLike'
 
 // Force import during development to enable Hot-Module Replacement
 // not need ?
 
 export default {
-  post: Post,
+  myLike: MyLike,
   editUserInfo: EditUserInfo,
   tagPost: TagPost,
   register: Register,

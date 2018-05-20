@@ -30,7 +30,7 @@ router.post('/delete', (req, res) => {
       post: req.body.postId,
       author: req.body.username
     }
-    // 存储
+    // 删除
     Like.remove(newLike, (err) => {
       if (err) {
         return res.json({ success: false, message: '取消点赞失败!' })
