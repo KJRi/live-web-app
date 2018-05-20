@@ -44,11 +44,14 @@ router.get('/get', (req, res) => {
       return res.json(posts)
     })
   } else if (req.query.title) {
-    Post.find({ 'title': /req.query.title/ }).sort({ _id: -1 }).exec().then((posts) => {
+    var reg = new RegExp(req.query.title)
+    Post.find({ 'title': reg }).sort({ _id: -1 }).exec().then((posts) => {
       return res.json(posts)
     })
   } else {
-    res.json({ success: false, message: '未获取到帖子!' })
+    Post.find({}).sort({ _id: -1 }).exec().then((posts) => {
+      return res.json(posts)
+    }
   }
 })
 module.exports = router
