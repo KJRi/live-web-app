@@ -35,7 +35,7 @@ class PostPage extends React.PureComponent<Props, State> {
         renderItem={item => (
           <List.Item
             key={item.title}
-            actions={[<IconText type='like-o' text={item.adNum} />, <IconText type='message' text={item.comNum} />,
+            actions={[
               <IconText type='tag-o' text={item.tag} />]}
       >
             <List.Item.Meta

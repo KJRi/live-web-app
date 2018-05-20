@@ -61,7 +61,8 @@ class PersonalList extends React.PureComponent<Props, State> {
           <Icon type='edit' />发帖<Icon type='right' /></div></Link>
         <Link to='/editUserInfo'><div className={styles['list-item']}>
           <Icon type='solution' />修改信息<Icon type='right' /></div></Link>
-        <div className={styles['list-item']}><Icon type='smile-o' />我的关注<Icon type='right' /></div>
+        <Link to='/MyFollow'><div className={styles['list-item']}>
+          <Icon type='smile-o' />我的关注<Icon type='right' /></div></Link>
         <Link to='/myLike'><div className={styles['list-item']}>
           <Icon type='like' />我的点赞<Icon type='right' /></div></Link>
         <div className={styles['list-item']} onClick={this.logout}><Icon type='logout' />退出登录<Icon type='right' /></div>
