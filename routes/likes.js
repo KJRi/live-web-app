@@ -8,12 +8,12 @@ router.post('/add', (req, res) => {
   if (!req.body.username) {
     res.json({ success: false, message: '未登录' })
   } else {
-    var newComment = {
+    var newLike = new Like({
       post: req.body.postId,
       author: req.body.username
-    }
+    })
     // 存储
-    Like.update(newComment, { upsert: true }, (err) => {
+    newLike.save((err) => {
       if (err) {
         return res.json({ success: false, message: '点赞失败!' })
       }
@@ -21,15 +21,33 @@ router.post('/add', (req, res) => {
     })
   }
 })
+// 删除点赞
+router.post('/delete', (req, res) => {
+  if (!req.body.username) {
+    res.json({ success: false, message: '未登录' })
+  } else {
+    var newLike = {
+      post: req.body.postId,
+      author: req.body.username
+    }
+    // 存储
+    Like.remove(newLike, (err) => {
+      if (err) {
+        return res.json({ success: false, message: '取消点赞失败!' })
+      }
+      res.json({ success: true, message: '取消点赞成功!' })
+    })
+  }
+})
 // 获取用户点赞
 router.get('/getByUser', (req, res) => {
-  Like.Post.find({ 'author': req.query.username }).sort({ _id: -1 }).exec().then((like) => {
+  Like.find({ 'author': req.query.username }).sort({ _id: -1 }).exec().then((like) => {
     return res.json(like)
   })
 })
 // 获取文章点赞
 router.get('/getByPost', (req, res) => {
-  Like.Post.find({ 'post': req.query.postId }).sort({ _id: -1 }).exec().then((like) => {
+  Like.find({ 'post': req.query.postId }).sort({ _id: -1 }).exec().then((like) => {
     return res.json(like)
   })
 })

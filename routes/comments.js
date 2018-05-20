@@ -8,13 +8,13 @@ router.post('/add', (req, res) => {
   if (!req.body.username) {
     res.json({ success: false, message: '未登录' })
   } else {
-    var newComment = {
+    var newComment = new Comment({
       post: req.body.postId,
       author: req.body.username,
       content: req.body.content
-    }
+    })
     // 存储
-    Comment.insert(newComment, (err) => {
+    newComment.save((err) => {
       if (err) {
         return res.json({ success: false, message: '评论失败!' })
       }
@@ -24,7 +24,7 @@ router.post('/add', (req, res) => {
 })
 // 获取
 router.get('/get', (req, res) => {
-  Comment.Post.find({ 'post': req.query.postId }).sort({ _id: -1 }).exec().then((comment) => {
+  Comment.find({ 'post': req.query.postId }).sort({ _id: -1 }).exec().then((comment) => {
     return res.json(comment)
   })
 })

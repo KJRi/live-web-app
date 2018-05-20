@@ -4,5 +4,5 @@ module.exports = (app) => {
   app.use('/info', require('./userinfos'))
   app.use('/post', require('./posts'))
   app.use('/comment', require('./comments'))
-  app.use('/like', require('./lieks'))
+  app.use('/like', require('./likes'))
 }
