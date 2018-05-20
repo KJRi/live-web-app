@@ -26,5 +26,14 @@ router.post('/editInfo', (req, res) => {
     })
   }
 })
+// 用户名读取资料
+router.get('/get', (req, res) => {
+  UserInfo.findOne({ 'username': req.query.username }, (err, info) => {
+    if (err) {
+      throw err
+    }
+    return res.json(info)
+  })
+})
 
 module.exports = router

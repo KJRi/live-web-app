@@ -6,37 +6,35 @@ import PostPage from 'components/PostPage'
 import { message } from 'antd'
 import { withRouter } from 'react-router'
 
-const userInfo = {
-  userName: 'kjr',
-  location: {
-    city: 'linfen',
-    province: 'shanxi'
-  },
-  descrpition: 'sfasdgasdcasdga',
-  phoneNum: '13303574348'
-}
-
 type Props = {
   match: Object
 }
 type State = {
-  postlist: Array<Object>
+  postlist: Array<Object>,
+  userinfo: Object
 }
 
 class Circle extends React.PureComponent<Props, State> {
   constructor (props: Props) {
     super(props)
     this.state = {
-      postlist: []
+      postlist: [],
+      userinfo: {}
     }
   }
   componentWillMount () {
-    const usernname = this.props.match.params.username
-    if (!usernname) {
+    const username = this.props.match.params.username
+    if (!username) {
       message.info('请先登录')
       window.location.href = '/login'
     }
-    fetch(`/post/get?author=${usernname}`, {
+    fetch(`/info/get?username=${username}`, {
+      method: 'GET'
+    }).then(res => res.json())
+    .then(res => this.setState({
+      userinfo: res
+    }))
+    fetch(`/post/get?author=${username}`, {
       method: 'GET'
     })
     .then(res => res.json())
@@ -48,10 +46,10 @@ class Circle extends React.PureComponent<Props, State> {
   }
 
   render () {
-    const { postlist } = this.state
+    const { postlist, userinfo } = this.state
     return (
       <div>
-        <UserProfile {...{ userInfo }} />
+        <UserProfile {...{ userinfo }} />
         <PostPage {...{ postlist }} />
       </div>
     )

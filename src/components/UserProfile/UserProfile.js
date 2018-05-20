@@ -4,20 +4,37 @@ import styles from './UserProfile.css'
 import { Avatar, Icon } from 'antd'
 
 type Props = {
-  userInfo: Object,
+  userinfo: Object,
 }
 type State = {
 }
 
 class UserProfile extends React.PureComponent<Props, State> {
   render () {
-    const { userName, descrpition, location } = this.props.userInfo
+    const { userinfo } = this.props
     return (
       <div className={styles['main-cont']}>
-        <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
-        <h2>{userName}</h2>
-        <p>{descrpition}</p>
-        <p><Icon type='environment' />{location.province}/{location.city}</p>
+        {
+          userinfo.headerImg
+          ? <Avatar src={userinfo.headerImg} />
+          : <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
+        }
+        <h2>{userinfo.username}</h2>
+        {
+          userinfo.description
+          ? <p>{userinfo.description}</p>
+          : ''
+        }
+        {
+          userinfo.birthday
+          ? <p><Icon type='heart-o' style={{ color: 'red' }} />{userinfo.birthday}</p>
+          : ''
+        }
+        {
+          userinfo.location
+          ? <p><Icon type='environment' />{userinfo.location[0]}/{userinfo.location[1]}/{userinfo.location[2]}</p>
+          : ''
+        }
       </div>
     )
   }
