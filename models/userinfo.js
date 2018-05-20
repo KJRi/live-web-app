@@ -9,13 +9,18 @@ const UserInfoSchema = new Schema({
     require: true
   },
   description: {
-    type: String
+    type: String,
+    default: 'lets put a smile on your face!'
   },
   birthday: {
     type: String
   },
   location: {
-    type: String
+    type: Array
+  },
+  headerImg: {
+    type: String,
+    default: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
   }
 })
 

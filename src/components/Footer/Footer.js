@@ -75,7 +75,6 @@ class Footer extends React.Component<Props, State> {
         <Menu
           theme='dark'
           mode='horizontal'
-          selectable='false'
           onclick={this.handleClick}
           selectedKeys={[this.state.current]}
           defaultSelectedKeys={['1']}

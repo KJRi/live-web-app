@@ -9,14 +9,16 @@ router.post('/editInfo', (req, res) => {
   if (!req.body.username) {
     res.json({ success: false, message: '未登录' })
   } else {
-    var newUserInfo = new UserInfo({
-      username: req.body.username,
+    var newUserInfo = {
       description: req.body.description,
       birthday: req.body.birthday,
-      location: req.body.location
-    })
+      location: req.body.location,
+      headerImg: req.body.imageUrl
+    }
     // 存储用户信息
-    newUserInfo.save((err) => {
+    UserInfo.update({ username: req.body.username }, newUserInfo, {
+      upsert: true
+    }, (err) => {
       if (err) {
         return res.json({ success: false, message: '储存信息失败!' })
       }

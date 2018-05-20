@@ -18,3 +18,11 @@
 h2{
   color: #fff;
 }
+:global .ant-upload {
+  width: 128px;
+  height: 128px;
+  img {
+    width: 128px;
+    height: 128px;
+  }
+}
