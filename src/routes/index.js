@@ -17,6 +17,7 @@ import MyLike from './MyLike'
 
 export default {
   myLike: MyLike,
+  post: Post,
   editUserInfo: EditUserInfo,
   tagPost: TagPost,
   register: Register,

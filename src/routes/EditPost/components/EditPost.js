@@ -104,7 +104,7 @@ class EditPost extends React.PureComponent<Props, State> {
           <FormItem>
             <Button className={styles.loginButton} type='primary' htmlType='submit'>
               <Icon type='share-alt' style={{ fontSize: 13 }} />发布
-                      </Button>
+            </Button>
           </FormItem>
         </Form>
       </div>

@@ -9,17 +9,15 @@ type State = {
 }
 
 class MyLike extends React.PureComponent<Props, State> {
-  searchPst: Function
   constructor (props: Props) {
     super(props)
     this.state = {
       postlist: []
     }
-    this.searchPst = this.searchPst.bind(this)
   }
   componentWillMount () {
     const username = localStorage.getItem('username')
-    fetch('/post/all', {
+    fetch(`/like/getByUser?username=${username}`, {
       method: 'GET'
     })
     .then(res => res.json())

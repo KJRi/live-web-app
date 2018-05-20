@@ -7,7 +7,9 @@ import moment from 'moment'
 import ImageUpload from 'components/ImageUpload'
 const FormItem = Form.Item
 const dateFormat = 'YYYY-MM-DD'
-type Props = {}
+type Props = {
+  form: Object
+}
 type State = {
   imageUrl: String
 }
@@ -18,6 +20,22 @@ class EditUserInfo extends React.PureComponent<Props, State> {
     this.state = {
       imageUrl: ''
     }
+  }
+  componentWillMount () {
+    const { form } = this.props
+    const username = localStorage.getItem('username')
+    fetch(`/info/get?username=${username}`, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(res => {
+      form.setFieldsValue({
+        description: res.description
+      })
+      this.setState({
+        imageUrl: res.headerImg
+      })
+    })
   }
   // 提交信息
   handleSubmit = (e) => {
@@ -52,6 +70,7 @@ class EditUserInfo extends React.PureComponent<Props, State> {
           if (res.success) {
             message.destroy()
             message.success(res.message)
+            window.location.href = '/personal'
           } else {
             // 失败时报错
             message.destroy()
@@ -94,7 +113,7 @@ class EditUserInfo extends React.PureComponent<Props, State> {
           <FormItem>
             <Button className={styles.loginButton} type='primary' htmlType='submit'>
                           确认更改
-                      </Button>
+            </Button>
           </FormItem>
         </Form>
       </div>
