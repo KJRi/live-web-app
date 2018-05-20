@@ -105,11 +105,58 @@ class Post extends React.PureComponent<Props, State> {
     })
   }
   likeIt = () => {
-    const id = this.props.match.params.id
-    const username = localStorage.getItem('username')
     const { likeState } = this.state
     if (likeState) {
-
+      // 取消点赞
+      fetch('/like/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: localStorage.getItem('username'),
+          postId: this.props.match.params.id
+        })
+      }).then(res => res.json())
+        .then(res => {
+          // 后端正确
+          if (res.success) {
+            message.destroy()
+            message.success(res.message)
+          } else {
+            message.destroy()
+            message.info(res.message)
+          }
+        })
+        .catch(e => console.log('Oops, error', e))
+      this.setState({
+        likeState: false
+      })
+    } else {
+      fetch('/like/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: localStorage.getItem('username'),
+          postId: this.props.match.params.id
+        })
+      }).then(res => res.json())
+        .then(res => {
+          // 后端正确
+          if (res.success) {
+            message.destroy()
+            message.success(res.message)
+          } else {
+            message.destroy()
+            message.info(res.message)
+          }
+        })
+        .catch(e => console.log('Oops, error', e))
+      this.setState({
+        likeState: true
+      })
     }
   }
   render () {

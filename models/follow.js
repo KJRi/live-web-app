@@ -7,10 +7,10 @@ const UserFollowSchema = new Schema({
     type: String,
     require: true
   },
-  follows: {
-    type: Array,
-    default: []
+  follow: {
+    type: String,
+    require: true
   }
 })
 
-module.exports = mongoose.model('UserFollow', UserFollowSchema)
+module.exports = mongoose.model('Follow', UserFollowSchema)
