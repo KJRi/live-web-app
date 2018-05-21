@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import styles from './MyFollow.css'
-import { Link } from 'antd'
+import { Link } from 'react-router-dom'
 
 type Props = {}
 type State = {
@@ -17,7 +17,7 @@ class MyFollow extends React.PureComponent<Props, State> {
   }
   componentWillMount () {
     const username = localStorage.getItem('username')
-    fetch('/follow/getByUser', {
+    fetch(`/follow/getByUser?username=${username}`, {
       method: 'GET'
     }).then(res => res.json())
     .then(res => {
@@ -30,11 +30,10 @@ class MyFollow extends React.PureComponent<Props, State> {
     const { followList } = this.state
     const followLink = `/circle/item.follow`
     return (
-      {
+
         followList && followList.map((item, index) => {
-          <Link to={followLink}><div>{item.follow}</div></Link>
+          return <Link to={followLink}><div>{item.follow}</div></Link>
         })
-      }
     )
   }
 }

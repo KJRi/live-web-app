@@ -24,7 +24,7 @@ class Circle extends React.PureComponent<Props, State> {
   }
   componentWillMount () {
     const username = this.props.match.params.username
-    if (!username) {
+    if (username === 'null') {
       message.info('请先登录')
       window.location.href = '/login'
     }
