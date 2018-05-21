@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './Post.css'
 import { Card, Icon, Avatar, Modal, Input, message, Button } from 'antd'
 import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
 const { TextArea } = Input
 const { Meta } = Card
 
@@ -160,10 +161,8 @@ class Post extends React.PureComponent<Props, State> {
       })
     }
   }
-  enterUser = () => {
-    window.location.herf = `/circle/${this.state.postlist.author}`
-  }
   render () {
+    const user = `/circle/${this.state.postlist.author}`
     const { postlist, visible, confirmLoading, likeState, commentList, userinfo } = this.state
     return (
       <div>
@@ -178,14 +177,16 @@ class Post extends React.PureComponent<Props, State> {
   >
           <Meta
             avatar={
-              <div style={{ textAlign: 'center' }} onClick={this.enterUser}>
-                {
+              <Link to={user}>
+                <div style={{ textAlign: 'center' }}>
+                  {
                   userinfo.headerImg
                   ? <Avatar src={userinfo.headerImg} />
                   : <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
                 }
-                <h5 style={{ color: '#999' }}>{postlist.author}</h5>
-              </div>
+                  <h5 style={{ color: '#999' }}>{postlist.author}</h5>
+                </div>
+              </Link>
           }
             title={postlist.title}
             description={postlist.postTime}

@@ -94,6 +94,7 @@ class UserProfile extends React.PureComponent<Props, State> {
   render () {
     const { userinfo } = this.props
     const name = localStorage.getItem('username')
+    console.log(name)
     console.log(userinfo)
     return (
       <div className={styles['main-cont']}>
@@ -103,16 +104,12 @@ class UserProfile extends React.PureComponent<Props, State> {
           : <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
         }
         <h2>{userinfo.username}</h2>
-        {
-          (!name === userinfo.username)
-          ? <Button onClick={this.followIt}>
-            {
+        <Button onClick={this.followIt}>
+          {
               this.state.followState
               ? '取消关注'
               : '+关注'
             }</Button>
-          : ''
-        }
         {
           userinfo.description
           ? <p>{userinfo.description}</p>
