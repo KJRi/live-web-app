@@ -21,12 +21,7 @@ class UserProfile extends React.PureComponent<Props, State> {
   }
   componentWillMount () {
     const { username } = this.props.userinfo
-    const name = localStorage.getItem('usernmae')
-    if (name === username) {
-      this.setState({
-        showButton: false
-      })
-    }
+    const name = localStorage.getItem('username')
     fetch(`/follow/getBy?follow=${username}&&username=${name}`, {
       method: 'GET'
     })
@@ -41,7 +36,7 @@ class UserProfile extends React.PureComponent<Props, State> {
   }
   followIt = () => {
     const { username } = this.props.userinfo
-    const name = localStorage.getItem('usernmae')
+    const name = localStorage.getItem('username')
     const { followState } = this.state
     if (followState) {
       // 取消关注
@@ -98,6 +93,8 @@ class UserProfile extends React.PureComponent<Props, State> {
   }
   render () {
     const { userinfo } = this.props
+    const name = localStorage.getItem('username')
+    console.log(userinfo)
     return (
       <div className={styles['main-cont']}>
         {
@@ -107,7 +104,7 @@ class UserProfile extends React.PureComponent<Props, State> {
         }
         <h2>{userinfo.username}</h2>
         {
-          this.state.showButton
+          (!name === userinfo.username)
           ? <Button onClick={this.followIt}>
             {
               this.state.followState
