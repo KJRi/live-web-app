@@ -2,6 +2,7 @@
 import React from 'react'
 import styles from './MyFollow.css'
 import { Link } from 'react-router-dom'
+import { List } from 'antd'
 
 type Props = {}
 type State = {
@@ -21,6 +22,7 @@ class MyFollow extends React.PureComponent<Props, State> {
       method: 'GET'
     }).then(res => res.json())
     .then(res => {
+      console.log(res)
       this.setState({
         followList: res
       })
@@ -28,12 +30,17 @@ class MyFollow extends React.PureComponent<Props, State> {
   }
   render () {
     const { followList } = this.state
-    const followLink = `/circle/item.follow`
     return (
-
-        followList && followList.map((item, index) => {
-          return <Link to={followLink}><div>{item.follow}</div></Link>
-        })
+      <List
+        header={<div>你的关注:</div>}
+        footer={<div>共{followList.length}个关注</div>}
+        bordered
+        dataSource={followList}
+        renderItem={item => (<List.Item
+          onClick={() => { window.location.href = `/circle/${item.follow}` }}>
+          {item.follow}
+        </List.Item>)}
+  />
     )
   }
 }
