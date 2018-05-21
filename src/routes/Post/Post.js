@@ -17,7 +17,6 @@ type State = {
   commentList: Array<Object>,
   userinfo: Object,
   likeState: Boolean,
-  followState: Boolean
 }
 
 class Post extends React.PureComponent<Props, State> {
@@ -54,17 +53,6 @@ class Post extends React.PureComponent<Props, State> {
       if (!res.length === 0) {
         this.setState({
           likeState: true
-        })
-      }
-    })
-    fetch(`/like/getBy?follow=${id}&&username=${username}`, {
-      method: 'GET'
-    })
-    .then(res => res.json())
-    .then(res => {
-      if (!res.length === 0) {
-        this.setState({
-          followState: true
         })
       }
     })
@@ -172,63 +160,11 @@ class Post extends React.PureComponent<Props, State> {
       })
     }
   }
-  followIt = () => {
-    const { followState } = this.state
-    if (followIt) {
-      // 取消关注
-      fetch('/follow/delete', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: localStorage.getItem('username'),
-          follow: this.state.postlist.author
-        })
-      }).then(res => res.json())
-        .then(res => {
-          // 后端正确
-          if (res.success) {
-            message.destroy()
-            message.success(res.message)
-          } else {
-            message.destroy()
-            message.info(res.message)
-          }
-        })
-        .catch(e => console.log('Oops, error', e))
-      this.setState({
-        followState: false
-      })
-    } else {
-      fetch('/follow/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: localStorage.getItem('username'),
-          follow: this.state.postlist.author
-        })
-      }).then(res => res.json())
-        .then(res => {
-          // 后端正确
-          if (res.success) {
-            message.destroy()
-            message.success(res.message)
-          } else {
-            message.destroy()
-            message.info(res.message)
-          }
-        })
-        .catch(e => console.log('Oops, error', e))
-      this.setState({
-        followState: true
-      })
-    }
+  enterUser = () => {
+    window.location.herf = `/circle/${this.state.postlist.author}`
   }
   render () {
-    const { postlist, visible, confirmLoading, followState, likeState, commentList, userinfo } = this.state
+    const { postlist, visible, confirmLoading, likeState, commentList, userinfo } = this.state
     return (
       <div>
         <Card
@@ -242,19 +178,13 @@ class Post extends React.PureComponent<Props, State> {
   >
           <Meta
             avatar={
-              <div style={{ textAlign: 'center' }}>
+              <div style={{ textAlign: 'center' }} onClick={this.enterUser}>
                 {
                   userinfo.headerImg
                   ? <Avatar src={userinfo.headerImg} />
                   : <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
                 }
                 <h5 style={{ color: '#999' }}>{postlist.author}</h5>
-                <Button onClick={this.followIt}>
-                  {
-                  followState
-                  ? '取消关注'
-                  : '+关注'
-                }</Button>
               </div>
           }
             title={postlist.title}
