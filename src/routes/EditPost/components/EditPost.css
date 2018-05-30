@@ -7,3 +7,6 @@
 .loginButton{
   float: right;
 }
+:global .BraftEditor-container{
+  background-color: #FFF;
+}

@@ -37,6 +37,15 @@ class Post extends React.PureComponent<Props, State> {
   componentWillMount () {
     const id = this.props.match.params.id
     const username = localStorage.getItem('username')
+    fetch(`/info/get?username=${username}`, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({
+        userinfo: res
+      })
+    })
     fetch(`/post/get?postId=${id}`, {
       method: 'GET'
     })
@@ -167,7 +176,6 @@ class Post extends React.PureComponent<Props, State> {
     return (
       <div>
         <Card
-          cover={<img alt='example' src='https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png' />}
           actions={[<Icon type={
             likeState
             ? 'like'
@@ -192,7 +200,7 @@ class Post extends React.PureComponent<Props, State> {
             description={postlist.postTime}
             style={{ marginBottom: 10 }}
     />
-          {postlist.content}
+          <p dangerouslySetInnerHTML={{ __html:postlist.content }} />
         </Card>
         {
           commentList && commentList.map((list, index) => {
