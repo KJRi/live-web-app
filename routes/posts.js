@@ -54,4 +54,21 @@ router.get('/get', (req, res) => {
     })
   }
 })
+// 删除帖子
+router.post('/delete', (req, res) => {
+  if (!req.body.username) {
+    res.json({ success: false, message: '未登录' })
+  } else {
+    var newPost = {
+      _id: req.body.postId
+    }
+    // 删除
+    Post.remove(newPost, (err) => {
+      if (err) {
+        return res.json({ success: false, message: '删除帖子失败!' })
+      }
+      res.json({ success: true, message: '删除帖子成功!' })
+    })
+  }
+})
 module.exports = router

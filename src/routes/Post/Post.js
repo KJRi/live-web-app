@@ -4,6 +4,7 @@ import styles from './Post.css'
 import { Card, Icon, Avatar, Modal, Input, message, Button } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 const { TextArea } = Input
 const { Meta } = Card
 
@@ -16,8 +17,8 @@ type State = {
   confirmLoading: Boolean,
   comment: String,
   commentList: Array<Object>,
-  userinfo: Object,
   likeState: Boolean,
+  headerImg: String
 }
 
 class Post extends React.PureComponent<Props, State> {
@@ -29,23 +30,15 @@ class Post extends React.PureComponent<Props, State> {
       confirmLoading: false,
       comment: '',
       commentList: [],
-      userinfo: {},
       likeState: false,
-      followState: false
+      followState: false,
+      headerImg: ''
     }
   }
   componentWillMount () {
     const id = this.props.match.params.id
     const username = localStorage.getItem('username')
-    fetch(`/info/get?username=${username}`, {
-      method: 'GET'
-    })
-    .then(res => res.json())
-    .then(res => {
-      this.setState({
-        userinfo: res
-      })
-    })
+
     fetch(`/post/get?postId=${id}`, {
       method: 'GET'
     })
@@ -53,6 +46,18 @@ class Post extends React.PureComponent<Props, State> {
     .then(res => {
       this.setState({
         postlist: res
+      })
+      const author = res.author
+      fetch(`/info/get?username=${author}`, {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.headerImg) {
+          this.setState({
+            headerImg: res.headerImg
+          })
+        }
       })
     })
     fetch(`/like/getBy?postId=${id}&&username=${username}`, {
@@ -115,6 +120,30 @@ class Post extends React.PureComponent<Props, State> {
       visible: false
     })
   }
+  deleteIt = () => {
+    fetch('/post/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: localStorage.getItem('username'),
+        postId: this.props.match.params.id
+      })
+    }).then(res => res.json())
+      .then(res => {
+        // 后端正确
+        if (res.success) {
+          message.destroy()
+          message.success(res.message)
+          window.location.href = '/'
+        } else {
+          message.destroy()
+          message.info(res.message)
+        }
+      })
+      .catch(e => console.log('Oops, error', e))
+  }
   likeIt = () => {
     const { likeState } = this.state
     if (likeState) {
@@ -172,32 +201,38 @@ class Post extends React.PureComponent<Props, State> {
   }
   render () {
     const user = `/circle/${this.state.postlist.author}`
-    const { postlist, visible, confirmLoading, likeState, commentList, userinfo } = this.state
+    const { postlist, visible, confirmLoading, likeState, headerImg, commentList } = this.state
     return (
       <div>
         <Card
-          actions={[<Icon type={
-            likeState
-            ? 'like'
-            : 'like-o'
-          } text={postlist.adNum} style={{ color: 'red' }} onClick={this.likeIt} />,
-            <Icon type='edit' text={postlist.comNum} onClick={() => this.setState({ visible: true })} />]}
+          actions={
+            postlist.author === localStorage.getItem('username')
+            ? [<Icon type={
+              likeState
+              ? 'like'
+              : 'like-o'
+            } text={postlist.adNum} style={{ color: 'red' }} onClick={this.likeIt} />,
+              <Icon type='edit' text={postlist.comNum} onClick={() => this.setState({ visible: true })} />,
+              <Icon type='close' text={postlist.comNum} onClick={this.deleteIt} />]
+            : [<Icon type={
+              likeState
+              ? 'like'
+              : 'like-o'
+            } text={postlist.adNum} style={{ color: 'red' }} onClick={this.likeIt} />,
+              <Icon type='edit' text={postlist.comNum} onClick={() => this.setState({ visible: true })} />]
+          }
   >
           <Meta
             avatar={
               <Link to={user}>
                 <div style={{ textAlign: 'center' }}>
-                  {
-                  userinfo.headerImg
-                  ? <Avatar src={userinfo.headerImg} />
-                  : <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
-                }
+                  <Avatar src={headerImg} />
                   <h5 style={{ color: '#999' }}>{postlist.author}</h5>
                 </div>
               </Link>
           }
             title={postlist.title}
-            description={postlist.postTime}
+            description={moment(postlist.postTime).format('lll')}
             style={{ marginBottom: 10 }}
     />
           <p dangerouslySetInnerHTML={{ __html:postlist.content }} />
