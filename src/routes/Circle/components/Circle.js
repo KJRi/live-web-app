@@ -47,9 +47,10 @@ class Circle extends React.PureComponent<Props, State> {
 
   render () {
     const { postlist, userinfo } = this.state
+    const name = this.props.match.params.username
     return (
       <div>
-        <UserProfile {...{ userinfo }} />
+        <UserProfile {...{ userinfo, name }} />
         <PostPage {...{ postlist }} />
       </div>
     )
