@@ -2,6 +2,7 @@
 import React from 'react'
 import styles from './PostPage.css'
 import { List, Avatar, Icon } from 'antd'
+import { Link } from 'react-router-dom'
 
 type Props = {
   postlist: Array<Object>,
@@ -24,9 +25,8 @@ class PostPage extends React.PureComponent<Props, State> {
 )
     const postlist = this.props.postlist
     postlist && postlist.map(item => {
-      item.href = `http://localhost:3000/id/${item._id}`
+      item.href = `/id/${item._id}`
     })
-    console.log(postlist)
     return (
       <List
         itemLayout='vertical'

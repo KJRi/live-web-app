@@ -65,7 +65,7 @@ class Post extends React.PureComponent<Props, State> {
     })
     .then(res => res.json())
     .then(res => {
-      if (!res.length === 0) {
+      if (res.length === 1) {
         this.setState({
           likeState: true
         })
